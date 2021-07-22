@@ -44,6 +44,9 @@ export default defineComponent({
       const { data } = await axios.post('https://backendthayanh.herokuapp.com/login', {
           headers: {
             'Access-Control-Allow-Origin' : '*',
+            'Access-Control-Allow-Credentials': True,
+            'connection': 'keep-alive',
+            'content-type': 'application/json',
             'Access-Control-Allow-Methods' : 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
           },
           user: user.value,

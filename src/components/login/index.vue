@@ -31,10 +31,21 @@ export default defineComponent({
   setup (props, {emit}) {
     const user = ref('')
     const pass = ref('')
+    
+    const config = {
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
+      }
+    }
 
     const eventClickSignIn = async () => {
       console.log(user.value)
       const { data } = await axios.post('https://backendthayanh.herokuapp.com/login', {
+          headers: {
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
+          }
           user: user.value,
           passw: pass.value
         }

@@ -76,11 +76,11 @@ export default defineComponent({
         all_question_search.value = JSON.parse(JSON.stringify(all_data.value))
       })
 
-      await axios.get('http://127.0.0.1:8000/topic').then(rs => {
+      await axios.get('http://backendthayanh.herokuapp.com/topic').then(rs => {
         all_topic.value = JSON.parse(rs.data)
       })
 
-      await axios.get('http://127.0.0.1:8000/document').then(rs => {
+      await axios.get('http://backendthayanh.herokuapp.com/document').then(rs => {
         all_document.value = JSON.parse(rs.data)
       })
     }
@@ -101,8 +101,8 @@ export default defineComponent({
 
     const sentResult =  async (result: any) => {
       console.log('sentResult', result)
-      console.log('http://127.0.0.1:8000/' + '1/' + result + '/' + id_question.value)
-      await axios.get('http://127.0.0.1:8000/receive/' + '1/' + result + '/' + id_question.value)
+      console.log('http://backendthayanh.herokuapp.com/' + '1/' + result + '/' + id_question.value)
+      await axios.get('http://backendthayanh.herokuapp.com/receive/' + '1/' + result + '/' + id_question.value)
     }
 
     const clickEventShowAnswer = () => {

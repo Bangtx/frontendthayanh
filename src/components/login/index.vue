@@ -34,7 +34,7 @@ export default defineComponent({
 
     const eventClickSignIn = async () => {
       console.log(user.value)
-      const { data } = await axios.post('http://127.0.0.1:8000/login', {
+      const { data } = await axios.post('https://backendthayanh.herokuapp.com/login', {
           user: user.value,
           passw: pass.value
         }

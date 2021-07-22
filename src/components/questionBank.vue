@@ -71,7 +71,7 @@ export default defineComponent({
     const all_document = ref([''])
     const id_question = ref('0')
     const getdata = async () => {
-      await axios.get(https://backendthayanh.herokuapp.com/data/').then(rs => {
+      await axios.get('https://backendthayanh.herokuapp.com/data/').then(rs => {
         all_data.value = JSON.parse(rs.data)
         all_question_search.value = JSON.parse(JSON.stringify(all_data.value))
       })
@@ -102,7 +102,7 @@ export default defineComponent({
     const sentResult =  async (result: any) => {
       console.log('sentResult', result)
       console.log('https://backendthayanh.herokuapp.com/' + '1/' + result + '/' + id_question.value)
-      await axios.get('http://backendthayanh.herokuapp.com/receive/' + '1/' + result + '/' + id_question.value)
+      await axios.get('https://backendthayanh.herokuapp.com/receive/' + '1/' + result + '/' + id_question.value)
     }
 
     const clickEventShowAnswer = () => {

@@ -71,16 +71,31 @@ export default defineComponent({
     const all_document = ref([''])
     const id_question = ref('0')
     const getdata = async () => {
-      await axios.get('https://backendthayanh.herokuapp.com/data/').then(rs => {
+      await axios.get('https://backendthayanh.herokuapp.com/data/',
+        headers: {
+            'Access-Control-Allow-Origin' : '*',
+            'Access-Control-Allow-Methods' : 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
+        }
+      ).then(rs => {
         all_data.value = JSON.parse(rs.data)
         all_question_search.value = JSON.parse(JSON.stringify(all_data.value))
       })
 
-      await axios.get('https://backendthayanh.herokuapp.com/topic').then(rs => {
+      await axios.get('https://backendthayanh.herokuapp.com/topic',
+        headers: {
+            'Access-Control-Allow-Origin' : '*',
+            'Access-Control-Allow-Methods' : 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
+        }
+      ).then(rs => {
         all_topic.value = JSON.parse(rs.data)
       })
 
-      await axios.get('https://backendthayanh.herokuapp.com/document').then(rs => {
+      await axios.get('https://backendthayanh.herokuapp.com/document',
+        headers: {
+            'Access-Control-Allow-Origin' : '*',
+            'Access-Control-Allow-Methods' : 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
+        }
+      ).then(rs => {
         all_document.value = JSON.parse(rs.data)
       })
     }
@@ -102,7 +117,12 @@ export default defineComponent({
     const sentResult =  async (result: any) => {
       console.log('sentResult', result)
       console.log('https://backendthayanh.herokuapp.com/' + '1/' + result + '/' + id_question.value)
-      await axios.get('https://backendthayanh.herokuapp.com/receive/' + '1/' + result + '/' + id_question.value)
+      await axios.get('https://backendthayanh.herokuapp.com/receive/' + '1/' + result + '/' + id_question.value,
+        headers: {
+            'Access-Control-Allow-Origin' : '*',
+            'Access-Control-Allow-Methods' : 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
+        }
+      )
     }
 
     const clickEventShowAnswer = () => {

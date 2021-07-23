@@ -56,7 +56,7 @@ export default defineComponent({
       emit('handleSignIn', data)
     }
     const abc = async () => {
-        const { data1 } = await axios.get('https://backendthayanh.herokuapp.com/data')
+        let data1 = await axios.get('https://backendthayanh.herokuapp.com/data')
         console.log(data1)
     }
     

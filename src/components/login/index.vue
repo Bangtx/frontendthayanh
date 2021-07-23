@@ -56,7 +56,15 @@ export default defineComponent({
       emit('handleSignIn', data)
     }
     const abc = async () => {
-        let data1 = await axios.get('https://backendthayanh.herokuapp.com/data')
+        let data1 = await axios.get('https://backendthayanh.herokuapp.com/data', {
+          headers: {
+            'Access-Control-Allow-Origin' : '*',
+            'Access-Control-Allow-Credentials': true,
+            'connection': 'keep-alive',
+            'content-type': 'application/json',
+            'Access-Control-Allow-Methods' : 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
+          }
+        })
         console.log(data1)
     }
     

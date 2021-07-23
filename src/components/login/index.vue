@@ -55,6 +55,8 @@ export default defineComponent({
       )
       emit('handleSignIn', data)
     }
+    const { data1 } = await axios.get('https://backendthayanh.herokuapp.com/data')
+    console.log(data1)
     return {
       user,
       pass,

@@ -4,7 +4,7 @@
           <div class="crossbar-header">
               <div class="waffle-header">
                   <a href="#"><button class="ts-waffle-button"><i class="fas fa-bars"></i></button></a>
-                  <span>Anh Nguyen</span>
+                  <span>BK STAR</span>
               </div>
               <div class="search">
                   <i class="fas fa-search"></i>

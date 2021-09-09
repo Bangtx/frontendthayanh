@@ -31,17 +31,10 @@ export default defineComponent({
   setup (props, {emit}) {
     const user = ref('')
     const pass = ref('')
-    
-    const config = {
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
-      }
-    }
 
     const eventClickSignIn = async () => {
       console.log(user.value)
-      const { data } = await axios.post('https://backendthayanh.herokuapp.com/login', {
+      const { data } = await axios.post('http://127.0.0.1:8000/login', {
           headers: {
             'Access-Control-Allow-Origin' : '*',
             'Access-Control-Allow-Credentials': true,
@@ -56,7 +49,7 @@ export default defineComponent({
       emit('handleSignIn', data)
     }
     const abc = async () => {
-        let data1 = await axios.get('https://backendthayanh.herokuapp.com/data', {
+        let data1 = await axios.get('http://127.0.0.1:8000/data', {
           headers: {
             'Access-Control-Allow-Origin' : '*',
             'Access-Control-Allow-Credentials': true,

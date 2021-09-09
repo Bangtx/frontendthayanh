@@ -1,50 +1,56 @@
 <template>
-    <div class="list">
-        <div class="topic">
-            <div><span>Topic:</span></div>
-            <select v-on:click="event_select_search" v-model="topic_search">
-                <option v-for="topic in all_topic" :key="topic[0]" v-bind:value="topic[0]">{{ topic[1] }}</option>
-            </select>
-        </div>
-        <div class="type">
-            <div>Type:</div>
-            <select>
-                <option>Multiple-Choice</option>
-                <option>Long-Response</option>
-            </select>
-        </div>
-        <div class="level">
-            <div>Level:</div>
-            <select>
-                <option>Easy</option>
-                <option>Medium</option>
-                <option>Hard</option>
-            </select>
-        </div>
-        <div class="doc">
-            <div>Doc:</div>
-            <select v-on:click="event_select_search" v-model="document_search">
-                <option v-for="document in all_document" :key="document[0]" v-bind:value="document[0]">{{ document[1] }}</option>
-            </select>
-        </div>
-        <!--      <QuestionBank-->
-        <!--          v-on:change_src_image="change_src_image"-->
-        <!--      />-->
-         <div class="list-MSSV">
-              <select multiple ="multiple" style="width: 70%; margin: 0 auto">
-                  <option v-for="item in all_question_search" :key="item[0]" v-on:dblclick="change_src_image(item)">{{ item[4] }}</option>
-              </select>
-         </div>
+  <div class="list">
+    <div class="topic">
+      <div><span>Topic:</span></div>
+      <select v-on:click="event_select_search" v-model="topic_search">
+        <option v-for="topic in all_topic" :key="topic[0]" v-bind:value="topic[0]">{{ topic[1] }}</option>
+      </select>
     </div>
-   <div class="Image">
-        <div class="show-image"><img id="myImage" v-bind:src="link_image"></div>
-            <sent-result
-                v-bind:isMultiChoice="isMultiChoice"
-                v-bind:isLongResponse="isLongResponse"
-                v-on:sentResult="sentResult"
-                v-on:clickEventShowAnswer="clickEventShowAnswer"
-            />
-   </div>
+    <div class="type">
+      <div>Type:</div>
+      <select>
+        <option>Multiple-Choice</option>
+        <option>Long-Response</option>
+      </select>
+    </div>
+    <div class="level">
+      <div>Level:</div>
+      <select>
+        <option>Easy</option>
+        <option>Medium</option>
+        <option>Hard</option>
+      </select>
+    </div>
+    <div class="doc">
+      <div>Doc:</div>
+      <select v-on:click="event_select_search" v-model="document_search">
+        <option v-for="document in all_document" :key="document[0]" v-bind:value="document[0]">{{
+            document[1]
+          }}
+        </option>
+      </select>
+    </div>
+    <!--      <QuestionBank-->
+    <!--          v-on:change_src_image="change_src_image"-->
+    <!--      />-->
+    <div class="list-MSSV">
+      <select multiple="multiple" style="width: 70%; margin: 0 auto">
+        <option v-for="item in all_question_search" :key="item[0]" v-on:dblclick="change_src_image(item)">{{
+            item[4]
+          }}
+        </option>
+      </select>
+    </div>
+  </div>
+  <div class="Image">
+    <div class="show-image"><img id="myImage" v-bind:src="link_image"></div>
+    <sent-result
+        v-bind:isMultiChoice="isMultiChoice"
+        v-bind:isLongResponse="isLongResponse"
+        v-on:sentResult="sentResult"
+        v-on:clickEventShowAnswer="clickEventShowAnswer"
+    />
+  </div>
 </template>
 
 <script lang="ts">
@@ -52,13 +58,14 @@ import { ref } from 'vue'
 import { defineComponent } from '@vue/composition-api'
 import SentResult from "@/components/sendResults.vue";
 import axios from 'axios'
+
 export default defineComponent({
   name: 'QuestionBank',
   props: {},
   components: {
     SentResult
   },
-  setup ( props, { emit }) {
+  setup(props, { emit} ) {
     const topic_search = ref(0)
     const document_search = ref(0)
     const isMultiChoice = ref(false)
@@ -73,31 +80,31 @@ export default defineComponent({
     const getdata = async () => {
       await axios.get('https://backendthayanh.herokuapp.com/data/', {
             headers: {
-                'Access-Control-Allow-Origin' : '*',
-                'Access-Control-Allow-Methods' : 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
+              'Access-Control-Allow-Origin': '*',
+              'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
             }
-        }
+          }
       ).then(rs => {
         all_data.value = JSON.parse(rs.data)
         all_question_search.value = JSON.parse(JSON.stringify(all_data.value))
       })
 
       await axios.get('https://backendthayanh.herokuapp.com/topic', {
-            headers: {
-                'Access-Control-Allow-Origin' : '*',
-                'Access-Control-Allow-Methods' : 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
-            }
-         }
+          headers: {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
+          }
+          }
       ).then(rs => {
         all_topic.value = JSON.parse(rs.data)
       })
 
       await axios.get('https://backendthayanh.herokuapp.com/document', {
-            headers: {
-                'Access-Control-Allow-Origin' : '*',
-                'Access-Control-Allow-Methods' : 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
-            }
-         }
+          headers: {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
+          }
+          }
       ).then(rs => {
         all_document.value = JSON.parse(rs.data)
       })
@@ -105,27 +112,27 @@ export default defineComponent({
     getdata()
     const change_src_image = (data: any) => {
       const type = data[5]
-      if (type === 'multi choice'){
+      if (type === 'multi choice') {
         isMultiChoice.value = true
         isLongResponse.value = false
       }
-      if (type === 'long response'){
+      if (type === 'long response') {
         isMultiChoice.value = false
         isLongResponse.value = true
       }
-      link_image.value =  data[6]
+      link_image.value = data[6]
       id_question.value = data[0]
     }
 
-    const sentResult =  async (result: any) => {
+    const sentResult = async (result: any) => {
       console.log('sentResult', result)
       console.log('https://backendthayanh.herokuapp.com/' + '1/' + result + '/' + id_question.value)
-      await axios.get('https://backendthayanh.herokuapp.com/receive/' + '1/' + result + '/' + id_question.value,{
-            headers: {
-                'Access-Control-Allow-Origin' : '*',
-                'Access-Control-Allow-Methods' : 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
-            }
-         }
+      await axios.get('https://backendthayanh.herokuapp.com/receive/' + '1/' + result + '/' + id_question.value, {
+          headers: {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
+          }
+        }
       )
     }
 
@@ -167,13 +174,13 @@ export default defineComponent({
 </script>
 
 <style>
-.Image{
+.Image {
   width: 77.8%;
   height: 100vh;
   background-color: #fff;
 }
 
-.Image .show-image{
+.Image .show-image {
   width: 100%;
   height: 100vh;
   position: relative;
@@ -181,16 +188,17 @@ export default defineComponent({
   float: left;
 }
 
-#myImage{
-  width:75%;
+#myImage {
+  width: 75%;
   max-height: 80vh;
   position: absolute;
   top: 45%;
   left: 50%;
   transform: translate(-50%, -50%);
-    /*margin: 0 auto;*/
+  /*margin: 0 auto;*/
 }
-.Image .sentResult{
+
+.Image .sentResult {
   width: 100%;
   height: 10vh;
   display: block;

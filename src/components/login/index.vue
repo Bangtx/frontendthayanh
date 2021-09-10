@@ -29,8 +29,8 @@ export default defineComponent({
     }
   },
   setup (props, {emit}) {
-    const user = ref('')
-    const pass = ref('')
+    const user = ref('20160320')
+    const pass = ref('1')
 
     const eventClickSignIn = async () => {
       console.log(user.value)

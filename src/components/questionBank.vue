@@ -77,13 +77,15 @@ export default defineComponent({
     const all_topic = ref([''])
     const all_document = ref([''])
     const id_question = ref('0')
+    const point = ref(0)
+    const point_detail = ref({})
     const getdata = async () => {
       await axios.get('http://127.0.0.1:8000/data/', {
-            headers: {
-              'Access-Control-Allow-Origin': '*',
-              'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
-            }
+          headers: {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
           }
+        }
       ).then(rs => {
         all_data.value = JSON.parse(rs.data)
         all_question_search.value = JSON.parse(JSON.stringify(all_data.value))
@@ -94,7 +96,7 @@ export default defineComponent({
             'Access-Control-Allow-Origin': '*',
             'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
           }
-          }
+        }
       ).then(rs => {
         all_topic.value = JSON.parse(rs.data)
       })
@@ -104,9 +106,20 @@ export default defineComponent({
             'Access-Control-Allow-Origin': '*',
             'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
           }
-          }
+        }
       ).then(rs => {
         all_document.value = JSON.parse(rs.data)
+      })
+
+      await axios.get('http://127.0.0.1:8000/point/1', {
+          headers: {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
+          }
+        }
+      ).then(rs => {
+        point.value = rs.data.point
+        point_detail.value = rs.data.point_detail
       })
     }
     getdata()
@@ -125,8 +138,6 @@ export default defineComponent({
     }
 
     const sentResult = async (result: any) => {
-      console.log('sentResult', result)
-      console.log('http://127.0.0.1:8000/' + '1/' + result + '/' + id_question.value)
       await axios.get('http://127.0.0.1:8000/receive/' + '1/' + result + '/' + id_question.value, {
           headers: {
             'Access-Control-Allow-Origin': '*',
@@ -149,12 +160,10 @@ export default defineComponent({
           all_question_search.value.push(element)
         }
       })
-      console.log(all_question_search.value)
     }
 
     return {
       id_question,
-      getdata,
       all_data,
       link_image,
       change_src_image,
@@ -167,7 +176,9 @@ export default defineComponent({
       topic_search,
       document_search,
       clickEventShowAnswer,
-      all_question_search
+      all_question_search,
+      point,
+      point_detail
     }
   }
 })

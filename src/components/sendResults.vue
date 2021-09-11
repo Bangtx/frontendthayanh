@@ -75,7 +75,9 @@ export default defineComponent({
 .sentResult .btn-show-result{
   margin-left: 60%;
 }
-
+.sentResult .btn-show-result button{
+    background-color: #42b983;
+}
 .sentResult .btn-show-result button:hover{
     background-color: #8889c0;
 }

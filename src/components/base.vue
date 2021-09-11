@@ -11,8 +11,7 @@
                   <input type="text" placeholder="Search">
               </div>
               <div class="powerbar-profile">
-                  <a href="#"><p class="powerbar"><i class="fas fa-ellipsis-h"></i></p></a>
-                  <a href="#"><button><img class="profile" src="image/profile.jpg" alt="profile"></button></a>
+                  <span @click="ishowRecord = true">show record</span>
               </div>
           </div>
       </header>
@@ -28,7 +27,11 @@
               <a href="#"><button style=" margin-top: 16vh;"><i class="fab fa-buromobelexperte"></i><br>App</button></a>
               <a href="#"><button><i class="far fa-question-circle"></i><br>Help</button></a>
           </div>
-        <question-bank/>
+      <question-bank/>
+      <Dialog
+        :show="ishowRecord"
+        @close-dialog="ishowRecord = false"
+      />
       </section>
 </body>
 </template>
@@ -36,14 +39,21 @@
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
 import { ref } from "vue"
-import axios from 'axios'
-import QuestionBank from "@/components/questionBank.vue";
-// import SentResult from "@/components/sendResults.vue";
+import QuestionBank from "@/components/questionBank.vue"
+import Dialog from '@/components/Dialog/index.vue'
+
 export default defineComponent({
   name: 'Base',
   components: {
     // /SentResult,
-    QuestionBank
+    QuestionBank,
+    Dialog
+  },
+  setup() {
+    const ishowRecord = ref(false)
+    return{
+      ishowRecord
+    }
   }
 })
 </script>
@@ -139,6 +149,15 @@ export default defineComponent({
     text-decoration: none;
     color: white;
     /* padding-left: 10px; */
+}
+.powerbar-profile span {
+  padding: 5px;
+  background-color: #42b983;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.powerbar-profile span:hover {
+  background-color: #7acfd8;
 }
 .powerbar-profile .powerbar{
     padding: 35px 10px;

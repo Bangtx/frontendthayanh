@@ -49,16 +49,16 @@ export default defineComponent({
       emit('handleSignIn', data)
     }
     const abc = async () => {
-        let data1 = await axios.get('http://127.0.0.1:8000/data', {
-          headers: {
-            'Access-Control-Allow-Origin' : '*',
-            'Access-Control-Allow-Credentials': true,
-            'connection': 'keep-alive',
-            'content-type': 'application/json',
-            'Access-Control-Allow-Methods' : 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
-          }
-        })
-        console.log(data1)
+      let data1 = await axios.get('http://127.0.0.1:8000/data', {
+        headers: {
+          'Access-Control-Allow-Origin' : '*',
+          'Access-Control-Allow-Credentials': true,
+          'connection': 'keep-alive',
+          'content-type': 'application/json',
+          'Access-Control-Allow-Methods' : 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
+        }
+      })
+      console.log(data1)
     }
     
     abc()

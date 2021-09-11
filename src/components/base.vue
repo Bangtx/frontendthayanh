@@ -62,7 +62,7 @@ export default defineComponent({
     const ishowRecord = ref(false)
 
     const getData = async () => {
-      await axios.get('http://127.0.0.1:8000/point/1', {
+      await axios.get('https://backendthayanh.herokuapp.com/point/1', {
           headers: {
             'Access-Control-Allow-Origin': '*',
             'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
@@ -73,7 +73,7 @@ export default defineComponent({
         point_detail.value = rs.data.point_detail
       })
 
-      await axios.get('http://127.0.0.1:8000/topic', {
+      await axios.get('https://backendthayanh.herokuapp.com/topic', {
           headers: {
             'Access-Control-Allow-Origin': '*',
             'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
@@ -83,7 +83,7 @@ export default defineComponent({
         all_topic.value = JSON.parse(rs.data)
       })
 
-      await axios.get('http://127.0.0.1:8000/sum_topic', {
+      await axios.get('https://backendthayanh.herokuapp.com/sum_topic', {
           headers: {
             'Access-Control-Allow-Origin': '*',
             'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',

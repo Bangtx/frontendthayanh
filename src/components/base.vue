@@ -55,8 +55,9 @@ export default defineComponent({
     const point = ref(0)
     const point_detail = ref([])
     const all_topic = ref([''])
-    const list_topic_name = ref([])
+    const list_topic_name = ref([''])
     const review = ref('')
+    const sum_question_of_topic = ref([0])
 
     const ishowRecord = ref(false)
 
@@ -81,9 +82,22 @@ export default defineComponent({
       ).then(rs => {
         all_topic.value = JSON.parse(rs.data)
       })
+
+      await axios.get('http://127.0.0.1:8000/sum_topic', {
+          headers: {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
+          }
+        }
+      ).then(rs => {
+        sum_question_of_topic.value = JSON.parse(JSON.stringify(rs.data))
+        console.log(sum_question_of_topic.value)
+      })
     }
 
     const openDialog = () => {
+      review.value = ''
+      list_topic_name.value = []
       ishowRecord.value = true
       point_detail.value.forEach((e) => {
         all_topic.value.forEach((topic) => {
@@ -94,10 +108,21 @@ export default defineComponent({
       })
 
       point_detail.value.forEach((e, index) => {
-        review.value += list_topic_name.value[index] + ' :' + point_detail.value[index][0]
+        let lv = ''
+        let rate = Number(point_detail.value[index][0]) / Number(sum_question_of_topic.value[index])
+        if (rate < 0.5) {
+          lv = 'medium'
+        }
+        if (rate >= 0.5 && rate < 0.7) {
+          lv = 'good'
+        }
+        if (rate >= 0.7) {
+          lv = 'excellent'
+        }
+        review.value += list_topic_name.value[index] +
+            ' :' + point_detail.value[index][0] +
+            '/' + sum_question_of_topic.value[index] + ' -->' + lv
       })
-
-      console.log(review.value)
     }
 
     getData()

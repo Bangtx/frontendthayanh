@@ -110,17 +110,6 @@ export default defineComponent({
       ).then(rs => {
         all_document.value = JSON.parse(rs.data)
       })
-
-      await axios.get('http://127.0.0.1:8000/point/1', {
-          headers: {
-            'Access-Control-Allow-Origin': '*',
-            'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
-          }
-        }
-      ).then(rs => {
-        point.value = rs.data.point
-        point_detail.value = rs.data.point_detail
-      })
     }
     getdata()
     const change_src_image = (data: any) => {

@@ -11,7 +11,7 @@
                   <input type="text" placeholder="Search">
               </div>
               <div class="powerbar-profile">
-                  <span @click="ishowRecord = true">show record</span>
+                  <span @click="openDialog">show record</span>
               </div>
           </div>
       </header>
@@ -30,6 +30,7 @@
       <question-bank/>
       <Dialog
         :show="ishowRecord"
+        :review="review"
         @close-dialog="ishowRecord = false"
       />
       </section>
@@ -41,6 +42,7 @@ import { defineComponent } from '@vue/composition-api'
 import { ref } from "vue"
 import QuestionBank from "@/components/questionBank.vue"
 import Dialog from '@/components/Dialog/index.vue'
+import axios from "axios";
 
 export default defineComponent({
   name: 'Base',
@@ -50,9 +52,60 @@ export default defineComponent({
     Dialog
   },
   setup() {
+    const point = ref(0)
+    const point_detail = ref([])
+    const all_topic = ref([''])
+    const list_topic_name = ref([])
+    const review = ref('')
+
     const ishowRecord = ref(false)
+
+    const getData = async () => {
+      await axios.get('http://127.0.0.1:8000/point/1', {
+          headers: {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
+          }
+        }
+      ).then(rs => {
+        point.value = rs.data.point
+        point_detail.value = rs.data.point_detail
+      })
+
+      await axios.get('http://127.0.0.1:8000/topic', {
+          headers: {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
+          }
+        }
+      ).then(rs => {
+        all_topic.value = JSON.parse(rs.data)
+      })
+    }
+
+    const openDialog = () => {
+      ishowRecord.value = true
+      point_detail.value.forEach((e) => {
+        all_topic.value.forEach((topic) => {
+          if (topic[0] === e[1]) {
+            list_topic_name.value.push(topic[1])
+          }
+        })
+      })
+
+      point_detail.value.forEach((e, index) => {
+        review.value += list_topic_name.value[index] + ' :' + point_detail.value[index][0]
+      })
+
+      console.log(review.value)
+    }
+
+    getData()
     return{
-      ishowRecord
+      ishowRecord,
+      openDialog,
+      list_topic_name,
+      review
     }
   }
 })

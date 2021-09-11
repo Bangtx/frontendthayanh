@@ -80,7 +80,7 @@ export default defineComponent({
     const point = ref(0)
     const point_detail = ref({})
     const getdata = async () => {
-      await axios.get('http://127.0.0.1:8000/data/', {
+      await axios.get('https://backendthayanh.herokuapp.com/data/', {
           headers: {
             'Access-Control-Allow-Origin': '*',
             'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
@@ -91,7 +91,7 @@ export default defineComponent({
         all_question_search.value = JSON.parse(JSON.stringify(all_data.value))
       })
 
-      await axios.get('http://127.0.0.1:8000/topic', {
+      await axios.get('https://backendthayanh.herokuapp.com/topic', {
           headers: {
             'Access-Control-Allow-Origin': '*',
             'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
@@ -101,7 +101,7 @@ export default defineComponent({
         all_topic.value = JSON.parse(rs.data)
       })
 
-      await axios.get('http://127.0.0.1:8000/document', {
+      await axios.get('https://backendthayanh.herokuapp.com/document', {
           headers: {
             'Access-Control-Allow-Origin': '*',
             'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
@@ -127,7 +127,7 @@ export default defineComponent({
     }
 
     const sentResult = async (result: any) => {
-      await axios.get('http://127.0.0.1:8000/receive/' + '1/' + result + '/' + id_question.value, {
+      await axios.get('https://backendthayanh.herokuapp.com/receive/' + '1/' + result + '/' + id_question.value, {
           headers: {
             'Access-Control-Allow-Origin': '*',
             'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
